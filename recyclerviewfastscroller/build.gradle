@@ -8,6 +8,7 @@ buildscript {
 }
 
 apply plugin: 'com.android.library'
+apply plugin: 'maven-publish'
 apply plugin: "com.jfrog.artifactory"
 
 android {
@@ -34,18 +35,6 @@ android {
 dependencies {
     compile "com.android.support:support-v4:22.2.0"
     compile "com.android.support:recyclerview-v7:22.2.0"
-}
-
-def uploadScriptPropertyName = "recyclerviewfastscroller.uploadScript"
-
-if (project.hasProperty(uploadScriptPropertyName)
-        && new File((String) project.property(uploadScriptPropertyName)).exists()) {
-
-    apply from: project.property(uploadScriptPropertyName)
-
-    afterEvaluate {
-        androidJavadocs.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
-    }
 }
 
 // Variables for Artifactory publishing are stored in local gradle.properties
