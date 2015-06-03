@@ -1,4 +1,5 @@
 apply plugin: 'com.android.library'
+apply plugin: "com.jfrog.artifactory"
 
 android {
     compileSdkVersion rootProject.ext.compileSdkVersion as Integer
@@ -22,8 +23,8 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:22.1.0"
-    compile "com.android.support:recyclerview-v7:22.1.0"
+    compile "com.android.support:support-v4:22.2.0"
+    compile "com.android.support:recyclerview-v7:22.2.0"
 }
 
 def uploadScriptPropertyName = "recyclerviewfastscroller.uploadScript"
@@ -36,4 +37,35 @@ if (project.hasProperty(uploadScriptPropertyName)
     afterEvaluate {
         androidJavadocs.classpath += project.android.libraryVariants.toList().first().javaCompile.classpath
     }
+}
+
+// Variables for Artifactory publishing are stored in local gradle.properties
+artifactory {
+    contextUrl = "${artifactory_contextUrl}"
+    publish {
+        repository {
+            repoKey = "${artifactory_repokey}"
+            username = "${artifactory_user}"
+            password = "${artifactory_password}"
+            maven = true
+        }
+        defaults {
+            publications ('recyclerviewfastscroller')
+        }
+    }
+}
+
+publishing {
+    publications {
+        recyclerviewfastscroller(MavenPublication) {
+            groupId 'com.brightcove'
+            artifactId 'recyclerviewfastscroller'
+            version rootProject.ext.versionName as String
+            artifact("$buildDir/outputs/aar/recyclerviewfastscroller-release.aar")
+        }
+    }
+}
+
+artifactoryPublish {
+    dependsOn assemble
 }
