@@ -34,18 +34,26 @@ import xyz.danoz.recyclerviewfastscroller.sectionindicator.SectionIndicator;
  */
 public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements RecyclerViewScroller {
 
-    /** Animation **/
+    /**
+     * Animation
+     **/
     private static final int DURATION_FADE_IN = 150;
     private static final int DURATION_FADE_OUT = 300;
     private static final int FADE_TIMEOUT = 1500;
     private HideHandler mHideHandler;
 
     private static final int[] STYLEABLE = R.styleable.AbsRecyclerViewFastScroller;
-    /** The long bar along which a handle travels */
+    /**
+     * The long bar along which a handle travels
+     */
     protected final View mBar;
-    /** The handle that signifies the user's progress in the list */
+    /**
+     * The handle that signifies the user's progress in the list
+     */
     protected final View mHandle;
-    /** A special listener that corresponds to when the user is grabbing the handle */
+    /**
+     * A special listener that corresponds to when the user is grabbing the handle
+     */
     protected FastScrollListener mFastScrollListener;
 
     private boolean mFastScrollAlwaysVisible;
@@ -62,8 +70,10 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
     private RecyclerView mRecyclerView;
     private SectionIndicator mSectionIndicator;
 
-    /** If I had my druthers, AbsRecyclerViewFastScroller would implement this as an interface, but Android has made
-     * {@link OnScrollListener} an abstract class instead of an interface. Hmmm */
+    /**
+     * If I had my druthers, AbsRecyclerViewFastScroller would implement this as an interface, but Android has made
+     * {@link OnScrollListener} an abstract class instead of an interface. Hmmm
+     */
     protected OnScrollListener mOnScrollListener;
 
     public AbsRecyclerViewFastScroller(Context context) {
@@ -139,6 +149,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Provides the ability to programmatically set the color of the fast scroller's handle
+     *
      * @param color for the handle to be
      */
     public void setHandleColor(int color) {
@@ -147,6 +158,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Provides the ability to programmatically set the background drawable of the fast scroller's handle
+     *
      * @param drawable for the handle's background
      */
     public void setHandleBackground(Drawable drawable) {
@@ -155,6 +167,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Provides the ability to programmatically set the color of the fast scroller's bar
+     *
      * @param color for the bar to be
      */
     public void setBarColor(int color) {
@@ -163,6 +176,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Provides the ability to programmatically set the background drawable of the fast scroller's bar
+     *
      * @param drawable for the bar's background
      */
     public void setBarBackground(Drawable drawable) {
@@ -266,6 +280,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
     /**
      * Classes that extend AbsFastScroller must implement their own {@link OnScrollListener} to respond to scroll
      * events when the {@link #mRecyclerView} is scrolled NOT using the fast scroller.
+     *
      * @return an implementation for responding to scroll events from the {@link #mRecyclerView}
      */
     @NonNull
@@ -293,7 +308,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
                     // While dragging, always show the handle.
                     if (newState == RecyclerView.SCROLL_STATE_DRAGGING)
                         show(0);
-                    // Once dragging stops, show the handle only a little more, then fade out.
+                        // Once dragging stops, show the handle only a little more, then fade out.
                     else if (newState == RecyclerView.SCROLL_STATE_IDLE)
                         show(FADE_TIMEOUT);
                 }
@@ -322,6 +337,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Takes a touch event and determines how much scroll progress this translates into
+     *
      * @param event touch event received by the layout
      * @return scroll progress, or fraction by which list is scrolled [0 to 1]
      */
@@ -336,12 +352,14 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
     /**
      * Define a layout resource for your implementation of AbsFastScroller
      * Currently must contain a handle view (R.id.scroll_handle) and a bar (R.id.scroll_bar)
+     *
      * @return a resource id corresponding to the chosen layout.
      */
     protected abstract int getLayoutResourceId();
 
     /**
      * Define a ScrollProgressCalculator for your implementation of AbsFastScroller
+     *
      * @return a chosen implementation of {@link ScrollProgressCalculator}
      */
     @Nullable
@@ -349,14 +367,15 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Moves the handle of the scroller by specific progress amount
+     *
      * @param scrollProgress fraction by which to move scroller [0 to 1]
      */
     public abstract void moveHandleToPosition(float scrollProgress);
 
-	private void show(int timeout) {
+    private void show(int timeout) {
         animate()
-            .alpha(1f)
-            .setDuration(DURATION_FADE_IN);
+                .alpha(1f)
+                .setDuration(DURATION_FADE_IN);
 
         Message msg = mHideHandler.obtainMessage(1);
         mHideHandler.removeMessages(1);
@@ -388,6 +407,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Set whether to always show or use the AbsListView behaviour.
+     *
      * @param scrollAlwaysVisible
      */
     public void setScrollAlwaysVisible(boolean scrollAlwaysVisible) {
@@ -417,6 +437,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Set timeout value.
+     *
      * @param desiredTimeout
      */
     public void setTimeout(long desiredTimeout) {
@@ -435,6 +456,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
 
     /**
      * Get scroll visibility status.
+     *
      * @return scroll visibility status
      */
     public boolean getScrollAlwaysVisible() {
@@ -458,3 +480,4 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
         mHandle.setVisibility(View.VISIBLE);
         mIsVisible = true;
     }
+}
