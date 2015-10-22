@@ -1,10 +1,13 @@
 package xyz.danoz.recyclerviewfastscroller.sectionindicator;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
-import android.view.ViewGroup;
+import android.view.View;
 import android.widget.FrameLayout;
 
 import xyz.danoz.recyclerviewfastscroller.R;
@@ -20,8 +23,14 @@ public abstract class AbsSectionIndicator<T> extends FrameLayout implements Sect
 
     private static final int[] STYLEABLE = R.styleable.AbsSectionIndicator;
 
+    private float mScrollerHandleHeight = 0.0f;
+    private float mScrollerPaddingY = 0.0f;
+
+    private VerticalScrollBoundsProvider mBoundsProvider;
     private VerticalScreenPositionCalculator mScreenPositionCalculator;
     private DefaultSectionIndicatorAlphaAnimator mDefaultSectionIndicatorAlphaAnimator;
+
+    private View mIndicatorLayout;
 
     public AbsSectionIndicator(Context context) {
         this(context, null);
@@ -33,11 +42,23 @@ public abstract class AbsSectionIndicator<T> extends FrameLayout implements Sect
 
     public AbsSectionIndicator(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
-        TypedArray attributes = getContext().getTheme().obtainStyledAttributes(attrs, STYLEABLE, 0, 0);
+        Resources.Theme theme = context.getTheme();
+        TypedArray attributes = theme.obtainStyledAttributes(attrs, STYLEABLE, 0, 0);
         try {
+            TypedValue typedValue = new TypedValue();
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+
+            theme.resolveAttribute(R.attr.rfs_fast_scroller_handle_height, typedValue, true);
+            mScrollerHandleHeight = typedValue.getDimension(metrics);
+
+            theme.resolveAttribute(R.attr.rfs_fast_scroller_handle_padding_y, typedValue, true);
+            mScrollerPaddingY = typedValue.getDimension(metrics);
+
             int layoutId = attributes.getResourceId(R.styleable.AbsSectionIndicator_rfs_section_indicator_layout, getDefaultLayoutId());
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-            inflater.inflate(layoutId, this, true);
+            mIndicatorLayout = inflater.inflate(layoutId, this, false);
+
+            addView(mIndicatorLayout);
         } finally {
             attributes.recycle();
         }
@@ -66,16 +87,31 @@ public abstract class AbsSectionIndicator<T> extends FrameLayout implements Sect
     @Override
     public void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
-        if (mScreenPositionCalculator == null) {
-            VerticalScrollBoundsProvider boundsProvider =
-                    new VerticalScrollBoundsProvider(0, ((ViewGroup) getParent()).getHeight() - getHeight());
-            mScreenPositionCalculator = new VerticalScreenPositionCalculator(boundsProvider);
+        if (changed) {
+            // Set the maximum scroll y to be at the top of the final scroller handle position.
+            float maximumScrollY = getHeight() - mScrollerHandleHeight - (mScrollerPaddingY * 2);
+
+            if (mScreenPositionCalculator == null) {
+                mBoundsProvider = new VerticalScrollBoundsProvider(0.0f, maximumScrollY, mScrollerPaddingY);
+                mScreenPositionCalculator = new VerticalScreenPositionCalculator(mBoundsProvider);
+            } else {
+                // Screen height may change.
+                mBoundsProvider.setMaximumScrollY(maximumScrollY);
+            }
         }
     }
 
     @Override
     public void setProgress(float progress) {
-        setY(mScreenPositionCalculator.getYPositionFromScrollProgress(progress));
+        float yPositionFromScrollProgress = mScreenPositionCalculator.getYPositionFromScrollProgress(progress);
+
+        // Ensure the bottom of the view aligns with the middle of the handle.
+        yPositionFromScrollProgress -= (float) mIndicatorLayout.getHeight();
+        yPositionFromScrollProgress += (mScrollerHandleHeight / 2) + mScrollerPaddingY;
+
+        // Don't go below zero pixels.
+        yPositionFromScrollProgress = Math.max(0.0f, yPositionFromScrollProgress);
+        mIndicatorLayout.setY(yPositionFromScrollProgress);
     }
 
     @Override
