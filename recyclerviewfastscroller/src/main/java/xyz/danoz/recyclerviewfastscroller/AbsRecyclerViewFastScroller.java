@@ -47,6 +47,9 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
      * {@link OnScrollListener} an abstract class instead of an interface. Hmmm */
     protected OnScrollListener mOnScrollListener;
 
+    private OnFastScrollListener mOnFastScrollListener;
+    private boolean mIsFastScrolling;
+
     public AbsRecyclerViewFastScroller(Context context) {
         this(context, null, 0);
     }
@@ -147,6 +150,20 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
         return mSectionIndicator;
     }
 
+    public void setOnFastScrollListener(OnFastScrollListener listener) {
+        this.mOnFastScrollListener = listener;
+    }
+
+    void setIsFastScrolling(boolean isFastScrolling) {
+        if (isFastScrolling != mIsFastScrolling) {
+            mIsFastScrolling = isFastScrolling;
+
+            if (mOnFastScrollListener != null) {
+                mOnFastScrollListener.onFastScrollStateChanged(mIsFastScrolling);
+            }
+        }
+    }
+
     @Override
     public void scrollTo(float scrollProgress, boolean fromTouch) {
         int position = getPositionFromScrollProgress(scrollProgress);
@@ -182,6 +199,11 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
             mOnScrollListener = new OnScrollListener() {
                 @Override
                 public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                    if (mIsFastScrolling) {
+                        // Do not listen to the scroll since this class is the one triggering it.
+                        return;
+                    }
+
                     float scrollProgress = 0;
                     ScrollProgressCalculator scrollProgressCalculator = getScrollProgressCalculator();
                     if (scrollProgressCalculator != null) {
@@ -249,4 +271,7 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
      */
     public abstract void moveHandleToPosition(float scrollProgress);
 
+    public interface OnFastScrollListener {
+        void onFastScrollStateChanged(boolean isFastScrolling);
+    }
 }

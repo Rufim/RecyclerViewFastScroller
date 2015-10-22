@@ -33,16 +33,21 @@ class FastScrollerTouchListener implements OnTouchListener {
     }
 
     private void showOrHideIndicator(@Nullable SectionIndicator sectionIndicator, MotionEvent event) {
-        if (sectionIndicator == null) {
-            return;
-        }
-
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                sectionIndicator.animateAlpha(1f);
+                mFastScroller.setIsFastScrolling(true);
+
+                if (sectionIndicator != null) {
+                    sectionIndicator.animateAlpha(1f);
+                }
                 return;
             case MotionEvent.ACTION_UP:
-                sectionIndicator.animateAlpha(0f);
+                mFastScroller.setIsFastScrolling(false);
+
+                if (sectionIndicator != null) {
+                    sectionIndicator.animateAlpha(0f);
+                }
+                break;
         }
     }
 
