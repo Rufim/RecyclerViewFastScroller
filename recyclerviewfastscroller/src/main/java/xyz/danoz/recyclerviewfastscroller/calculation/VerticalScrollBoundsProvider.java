@@ -5,8 +5,8 @@ package xyz.danoz.recyclerviewfastscroller.calculation;
  */
 public class VerticalScrollBoundsProvider {
 
-    private final float mMinimumScrollY;
-    private final float mMaximumScrollY;
+    private float mMinimumScrollY;
+    private float mMaximumScrollY;
 
     public VerticalScrollBoundsProvider(float minimumScrollY, float maximumScrollY) {
         mMinimumScrollY = minimumScrollY;
@@ -17,7 +17,15 @@ public class VerticalScrollBoundsProvider {
         return mMinimumScrollY;
     }
 
+    public void setMinimumScrollY(float mMinimumScrollY) {
+        this.mMinimumScrollY = mMinimumScrollY;
+    }
+
     public float getMaximumScrollY() {
         return mMaximumScrollY;
+    }
+
+    public void setMaximumScrollY(float mMaximumScrollY) {
+        this.mMaximumScrollY = mMaximumScrollY;
     }
 }

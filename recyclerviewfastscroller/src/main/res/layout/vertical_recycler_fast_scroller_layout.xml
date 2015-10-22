@@ -3,8 +3,8 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:paddingTop="18dp"
-    android:paddingBottom="18dp"
+    android:layout_marginBottom="?rfs_fast_scroller_handle_padding_y"
+    android:layout_marginTop="?rfs_fast_scroller_handle_padding_y"
     android:layout_gravity="center"
     >
 
@@ -19,7 +19,7 @@
     <View
         android:id="@+id/scroll_handle"
         android:layout_width="6dp"
-        android:layout_height="32dp"
+        android:layout_height="?rfs_fast_scroller_handle_height"
         android:background="@android:color/darker_gray"
         android:layout_gravity="center_horizontal"
         />

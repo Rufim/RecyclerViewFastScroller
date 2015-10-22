@@ -198,13 +198,17 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
     protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
         super.onLayout(changed, left, top, right, bottom);
 
-        if (getScrollProgressCalculator() == null) {
-            onCreateScrollProgressCalculator();
+        if (isInEditMode()) {
+            return;
         }
 
-        // synchronize the handle position to the RecyclerView
-        float scrollProgress = getScrollProgressCalculator().calculateScrollProgress(mRecyclerView);
-        moveHandleToPosition(scrollProgress);
+        if (changed) {
+            onCreateScrollProgressCalculator();
+
+            // synchronize the handle position to the RecyclerView
+            float scrollProgress = getScrollProgressCalculator().calculateScrollProgress(mRecyclerView);
+            moveHandleToPosition(scrollProgress);
+        }
     }
 
     /**
