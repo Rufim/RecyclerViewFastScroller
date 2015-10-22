@@ -17,7 +17,8 @@ public abstract class VerticalScrollProgressCalculator implements TouchableScrol
 
     @Override
     public float calculateScrollProgress(MotionEvent event) {
-        float y = event.getY();
+        // Offset any padding that may be used.
+        float y = event.getY() - mScrollBoundsProvider.getScrollPaddingY();
 
         if (y <= mScrollBoundsProvider.getMinimumScrollY()) {
             return 0;

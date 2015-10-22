@@ -2,6 +2,7 @@ package xyz.danoz.recyclerviewfastscroller;
 
 import android.annotation.TargetApi;
 import android.content.Context;
+import android.content.res.Resources;
 import android.content.res.TypedArray;
 import android.graphics.Color;
 import android.graphics.drawable.Drawable;
@@ -12,6 +13,8 @@ import android.support.annotation.Nullable;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.OnScrollListener;
 import android.util.AttributeSet;
+import android.util.DisplayMetrics;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
@@ -50,6 +53,8 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
     private OnFastScrollListener mOnFastScrollListener;
     private boolean mIsFastScrolling;
 
+    protected float mScrollerPaddingY = 0.0f;
+
     public AbsRecyclerViewFastScroller(Context context) {
         this(context, null, 0);
     }
@@ -61,9 +66,16 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
     public AbsRecyclerViewFastScroller(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
 
-        TypedArray attributes = getContext().getTheme().obtainStyledAttributes(attrs, STYLEABLE, 0, 0);
+        Resources.Theme theme = getContext().getTheme();
+        TypedArray attributes = theme.obtainStyledAttributes(attrs, STYLEABLE, 0, 0);
 
         try {
+            TypedValue typedValue = new TypedValue();
+            DisplayMetrics metrics = getResources().getDisplayMetrics();
+
+            theme.resolveAttribute(R.attr.rfs_fast_scroller_handle_padding_y, typedValue, true);
+            mScrollerPaddingY = typedValue.getDimension(metrics);
+
             int layoutResource = attributes.getResourceId(R.styleable.AbsRecyclerViewFastScroller_rfs_fast_scroller_layout,
                     getLayoutResourceId());
             LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -185,7 +197,11 @@ public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements
     }
 
     private int getPositionFromScrollProgress(float scrollProgress) {
-        return (int) (mRecyclerView.getAdapter().getItemCount() * scrollProgress);
+        int lastPosition = mRecyclerView.getAdapter().getItemCount() - 1;
+        if (lastPosition <= 0) {
+            return 0;
+        }
+        return (int) (lastPosition * scrollProgress);
     }
 
     /**

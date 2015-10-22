@@ -7,10 +7,12 @@ public class VerticalScrollBoundsProvider {
 
     private float mMinimumScrollY;
     private float mMaximumScrollY;
+    private float mScrollPaddingY;
 
-    public VerticalScrollBoundsProvider(float minimumScrollY, float maximumScrollY) {
+    public VerticalScrollBoundsProvider(float minimumScrollY, float maximumScrollY, float scrollPaddingY) {
         mMinimumScrollY = minimumScrollY;
         mMaximumScrollY = maximumScrollY;
+        mScrollPaddingY = scrollPaddingY;
     }
 
     public float getMinimumScrollY() {
@@ -27,5 +29,13 @@ public class VerticalScrollBoundsProvider {
 
     public void setMaximumScrollY(float mMaximumScrollY) {
         this.mMaximumScrollY = mMaximumScrollY;
+    }
+
+    public float getScrollPaddingY() {
+        return mScrollPaddingY;
+    }
+
+    public void setScrollPaddingY(float mScrollPaddingY) {
+        this.mScrollPaddingY = mScrollPaddingY;
     }
 }

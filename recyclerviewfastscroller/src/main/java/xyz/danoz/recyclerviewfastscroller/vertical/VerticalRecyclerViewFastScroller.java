@@ -59,7 +59,7 @@ public class VerticalRecyclerViewFastScroller extends AbsRecyclerViewFastScrolle
         float minimumScrollY = 0.0f;
         float maximumScrollY = mBar.getHeight() - mHandle.getHeight();
 
-        VerticalScrollBoundsProvider boundsProvider = new VerticalScrollBoundsProvider(minimumScrollY, maximumScrollY);
+        VerticalScrollBoundsProvider boundsProvider = new VerticalScrollBoundsProvider(minimumScrollY, maximumScrollY, mScrollerPaddingY);
         mScrollProgressCalculator = new VerticalLinearLayoutManagerScrollProgressCalculator(boundsProvider);
         mScreenPositionCalculator = new VerticalScreenPositionCalculator(boundsProvider);
     }

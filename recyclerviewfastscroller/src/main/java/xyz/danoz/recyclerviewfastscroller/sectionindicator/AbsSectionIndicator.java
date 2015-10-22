@@ -92,7 +92,7 @@ public abstract class AbsSectionIndicator<T> extends FrameLayout implements Sect
             float maximumScrollY = getHeight() - mScrollerHandleHeight - (mScrollerPaddingY * 2);
 
             if (mScreenPositionCalculator == null) {
-                mBoundsProvider = new VerticalScrollBoundsProvider(0.0f, maximumScrollY);
+                mBoundsProvider = new VerticalScrollBoundsProvider(0.0f, maximumScrollY, mScrollerPaddingY);
                 mScreenPositionCalculator = new VerticalScreenPositionCalculator(mBoundsProvider);
             } else {
                 // Screen height may change.
