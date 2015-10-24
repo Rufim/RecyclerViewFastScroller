@@ -1,15 +1,11 @@
 package xyz.danoz.recyclerviewfastscroller.calculation.progress;
 
-import android.support.v7.widget.GridLayoutManager;
+import xyz.danoz.recyclerviewfastscroller.calculation.VerticalScrollBoundsProvider;
+
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.RecyclerView.ViewHolder;
-import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
-
-import java.util.Arrays;
-
-import xyz.danoz.recyclerviewfastscroller.calculation.VerticalScrollBoundsProvider;
 
 /**
  * Calculates scroll progress for a {@link RecyclerView} with a {@link LinearLayoutManager}
@@ -26,26 +22,8 @@ public class VerticalLinearLayoutManagerScrollProgressCalculator extends Vertica
      */
     @Override
     public float calculateScrollProgress(RecyclerView recyclerView) {
-
-        RecyclerView.LayoutManager layoutManager = recyclerView.getLayoutManager();
-
-        int spanCount = 1;
-        int lastFullyVisiblePosition = 0;
-
-        if (layoutManager instanceof GridLayoutManager) {
-            spanCount = ((GridLayoutManager) layoutManager).getSpanCount();
-        }
-
-        if (layoutManager instanceof LinearLayoutManager) {
-            lastFullyVisiblePosition = ((LinearLayoutManager) layoutManager).
-                    findLastCompletelyVisibleItemPosition();
-        } else if (layoutManager instanceof StaggeredGridLayoutManager) {
-            int[] into = ((StaggeredGridLayoutManager) layoutManager).
-                    findLastCompletelyVisibleItemPositions(null);
-            Arrays.sort(into);
-            lastFullyVisiblePosition = into[into.length - 1];
-            spanCount = ((StaggeredGridLayoutManager) layoutManager).getSpanCount();
-        }
+        LinearLayoutManager layoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+        int lastFullyVisiblePosition = layoutManager.findLastCompletelyVisibleItemPosition();
 
         View visibleChild = recyclerView.getChildAt(0);
         if (visibleChild == null) {
@@ -54,7 +32,7 @@ public class VerticalLinearLayoutManagerScrollProgressCalculator extends Vertica
         ViewHolder holder = recyclerView.getChildViewHolder(visibleChild);
         int itemHeight = holder.itemView.getHeight();
         int recyclerHeight = recyclerView.getHeight();
-        int itemsInWindow = (recyclerHeight / itemHeight) * spanCount;
+        int itemsInWindow = recyclerHeight / itemHeight;
 
         int numItemsInList = recyclerView.getAdapter().getItemCount();
         int numScrollableSectionsInList = numItemsInList - itemsInWindow;

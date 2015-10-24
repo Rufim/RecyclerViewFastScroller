@@ -18,7 +18,4 @@
         <attr name="rfs_backgroundColor" format="color|reference" />
     </declare-styleable>
 
-    <attr name="rfs_fast_scroller_handle_height" format="dimension" />
-    <attr name="rfs_fast_scroller_handle_padding_y" format="dimension" />
-
 </resources>

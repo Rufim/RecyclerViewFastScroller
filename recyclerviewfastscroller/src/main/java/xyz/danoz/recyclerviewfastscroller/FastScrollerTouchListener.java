@@ -1,11 +1,11 @@
 package xyz.danoz.recyclerviewfastscroller;
 
+import xyz.danoz.recyclerviewfastscroller.sectionindicator.SectionIndicator;
+
 import android.support.annotation.Nullable;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnTouchListener;
-
-import xyz.danoz.recyclerviewfastscroller.sectionindicator.SectionIndicator;
 
 /**
  * Touch listener that will move a {@link AbsRecyclerViewFastScroller}'s handle to a specified offset along the scroll bar
@@ -35,19 +35,14 @@ class FastScrollerTouchListener implements OnTouchListener {
     private void showOrHideIndicator(@Nullable SectionIndicator sectionIndicator, MotionEvent event) {
         switch (event.getActionMasked()) {
             case MotionEvent.ACTION_DOWN:
-                mFastScroller.setIsFastScrolling(true);
-
-                if (sectionIndicator != null) {
+                mFastScroller.notifyScrollState(true);
+                if (sectionIndicator != null)
                     sectionIndicator.animateAlpha(1f);
-                }
                 return;
             case MotionEvent.ACTION_UP:
-                mFastScroller.setIsFastScrolling(false);
-
-                if (sectionIndicator != null) {
+                mFastScroller.notifyScrollState(false);
+                if (sectionIndicator != null)
                     sectionIndicator.animateAlpha(0f);
-                }
-                break;
         }
     }
 }

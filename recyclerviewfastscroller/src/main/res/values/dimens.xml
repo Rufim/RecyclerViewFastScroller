@@ -7,5 +7,4 @@
     <dimen name="margin_huge">64dp</dimen>
 
     <dimen name="list_item_height">72dp</dimen>
-    <dimen name="indicaton_text_size">48sp</dimen>
 </resources>
