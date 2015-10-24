@@ -1,27 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
-    android:layout_marginBottom="?rfs_fast_scroller_handle_padding_y"
-    android:layout_marginTop="?rfs_fast_scroller_handle_padding_y"
     android:layout_gravity="center"
-    >
+    android:layout_marginBottom="?rfs_fast_scroller_handle_padding_y"
+    android:layout_marginTop="?rfs_fast_scroller_handle_padding_y">
 
     <View
         android:id="@+id/scroll_bar"
         android:layout_width="1dp"
         android:layout_height="match_parent"
-        android:background="@android:color/darker_gray"
         android:layout_gravity="center"
-        />
+        android:background="@android:color/darker_gray" />
 
     <View
         android:id="@+id/scroll_handle"
         android:layout_width="6dp"
         android:layout_height="?rfs_fast_scroller_handle_height"
-        android:background="@android:color/darker_gray"
         android:layout_gravity="center_horizontal"
-        />
+        android:background="@android:color/darker_gray" />
 
 </FrameLayout>

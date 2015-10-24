@@ -18,10 +18,10 @@ allprojects {
 }
 
 ext {
-    compileSdkVersion = 21
+    compileSdkVersion = 23
     buildToolsVersion = '23.0.1'
-    targetSdkVersion = 21
+    targetSdkVersion = 23
     minSdkVersion = 14
-    versionCode = 5
-    versionName = "0.1.5"
+    versionCode = 7
+    versionName = "0.1.8"
 }
