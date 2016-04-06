@@ -33,8 +33,7 @@ The best way to check everything out is to peruse the example code and run the s
 
 1) In the activity or fragment XML where your `RecyclerView` resides, include a `VerticalRecyclerViewFastScroller` object. The following example would be in a relative layout:
 
-```java
-...
+```xml
   <android.support.v7.widget.RecyclerView
       android:id="@+id/recyclerView"
       android:layout_width="match_parent"
@@ -47,16 +46,14 @@ The best way to check everything out is to peruse the example code and run the s
       android:layout_height="match_parent"
       android:layout_alignParentRight="true"
       />
-...
+
 ```
 
 2) In your fragment or activity where you setup layout programmatically, simply hook up the fast scroller to the recycler as follows:
 
 ```java
-...
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
-      ...
 
       // Grab your RecyclerView and the RecyclerViewFastScroller from the layout
       RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
@@ -68,17 +65,16 @@ The best way to check everything out is to peruse the example code and run the s
       // Connect the scroller to the recycler (to let the recycler scroll the scroller's handle)
       recyclerView.setOnScrollListener(fastScroller.getOnScrollListener());
 
-      ...
       return rootView;
   }
-...
+
 ```
 
 ###### Optional usage
 
 There are currently a few attributes that can be used to customize the vertical fast scroller:
 
-```java
+```xml
   <attr name="rfs_barColor" format="color|reference" />
   <attr name="rfs_barBackground" format="reference" />
   <attr name="rfs_handleColor" format="color|reference" />
@@ -91,26 +87,22 @@ You can see usage of some of these in the example `recycler_view_with_fast_scrol
 
 Refer to `RecyclerViewWithSectionIndicatorFragment` and the corresponding `recycler_view_with_fast_scroller_section_title_indicator_fragment.xml` in order to find an implementation that adds the Lollipop-Contacts-like section indicator. In addition to the above, you will need to include the indicator in your layout (example here from `recycler_view_with_fast_scroller_section_title_indicator_fragment.xml`):
 
-```java
-...
+```xml
     <xyz.danoz.recyclerviewfastscroller.sample.ui.example.ColorGroupSectionTitleIndicator
       android:id="@+id/fast_scroller_section_title_indicator"
       android:layout_width="wrap_content"
       android:layout_height="@dimen/list_item_height"
       android:layout_toLeftOf="@id/fast_scroller"
       android:layout_toStartOf="@id/fast_scroller"
-
       recyclerviewfastscroller:rfs_backgroundColor="@android:color/white"
       recyclerviewfastscroller:rfs_textColor="@android:color/black"
        />
-...
+
 ```
 and then connect it to the scroller in the fragment:
 ```java
-...
     // Connect the section indicator to the scroller
     fastScroller.setSectionIndicator(sectionTitleIndicator);
-...
 ```
 
 ### Contribution
