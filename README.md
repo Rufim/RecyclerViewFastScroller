@@ -17,6 +17,12 @@ You can grab the current version of the library from maven central
 compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
 ```
 
+```java
+compile 'com.github.emanuelet:RecyclerViewFastScroller:0.2.0'
+```
+
+Add `maven { url "https://jitpack.io" }` to repositories.
+
 ### Usage
 
 Below are some simple steps to using a RecyclerViewFastScroller. Currently, there is only a single implementation (`VerticalRecyclerViewFastScroller`), so that will be used here.
@@ -51,17 +57,17 @@ The best way to check everything out is to peruse the example code and run the s
   public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
       View rootView = inflater.inflate(R.layout.recycler_view_frag, container, false);
       ...
-      
+
       // Grab your RecyclerView and the RecyclerViewFastScroller from the layout
       RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recyclerView);
       VerticalRecyclerViewFastScroller fastScroller = (VerticalRecyclerViewFastScroller) rootView.findViewById(R.id.fast_scroller);
-      
+
       // Connect the recycler to the scroller (to let the scroller scroll the list)
       fastScroller.setRecyclerView(recyclerView);
-      
+
       // Connect the scroller to the recycler (to let the recycler scroll the scroller's handle)
       recyclerView.setOnScrollListener(fastScroller.getOnScrollListener());
-      
+
       ...
       return rootView;
   }
