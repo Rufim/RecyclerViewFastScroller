@@ -4,7 +4,7 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:3.1.0"
+        classpath "org.jfrog.buildinfo:build-info-extractor-gradle:4.0.0"
     }
 }
 
@@ -35,9 +35,9 @@ android {
 }
 
 dependencies {
-    compile "com.android.support:support-v4:23.1.0"
-    compile 'com.android.support:appcompat-v7:23.1.0'
-    compile "com.android.support:recyclerview-v7:23.1.0"
+    compile group: rootProject.ext.androidSupportGroup, name: 'support-v4', version: rootProject.ext.supportLibsVersion
+    compile group: rootProject.ext.androidSupportGroup, name: 'appcompat-v7', version: rootProject.ext.supportLibsVersion
+    compile group: rootProject.ext.androidSupportGroup, name: 'recyclerview-v7', version: rootProject.ext.supportLibsVersion
 }
 
 // Variables for Artifactory publishing are stored in local gradle.properties
