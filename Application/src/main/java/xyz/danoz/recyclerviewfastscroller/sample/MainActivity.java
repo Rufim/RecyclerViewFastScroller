@@ -18,8 +18,8 @@ package xyz.danoz.recyclerviewfastscroller.sample;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -34,23 +34,17 @@ import xyz.danoz.recyclerviewfastscroller.vertical.VerticalRecyclerViewFastScrol
  * Simple activity for displaying an example of the {@link VerticalRecyclerViewFastScroller} as well as
  * {@link SectionTitleIndicator} usage paired with the fast scroller
  */
-public class MainActivity extends FragmentActivity {
+public class MainActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.activity_main);
 
         if (savedInstanceState == null) {
-            RecyclerViewWithFastScrollerFragment fragment = new RecyclerViewWithFastScrollerFragment();
-            replaceCurrentFragment(fragment);
+            changeSection(RecyclerViewWithFastScrollerFragment.class);
         }
-    }
-
-    private void replaceCurrentFragment(Fragment newFragment) {
-        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-        transaction.replace(R.id.sample_content_fragment, newFragment);
-        transaction.commit();
     }
 
     @Override
@@ -62,18 +56,30 @@ public class MainActivity extends FragmentActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle item selection
         switch (item.getItemId()) {
             case R.id.menu_item_list_no_section_indicator:
-                RecyclerViewWithFastScrollerFragment simpleFastScrollerFragment = new RecyclerViewWithFastScrollerFragment();
-                replaceCurrentFragment(simpleFastScrollerFragment);
+                changeSection(RecyclerViewWithFastScrollerFragment.class);
                 return true;
             case R.id.menu_item_list_with_sections:
-                RecyclerViewWithSectionIndicatorFragment sectionsFragment = new RecyclerViewWithSectionIndicatorFragment();
-                replaceCurrentFragment(sectionsFragment);
+                changeSection(RecyclerViewWithSectionIndicatorFragment.class);
                 return true;
             default:
                 return super.onOptionsItemSelected(item);
         }
+    }
+
+    private void changeSection(Class<? extends Fragment> fragment) {
+        try {
+            Fragment sectionsFragment = fragment.newInstance();
+            replaceCurrentFragment(sectionsFragment);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void replaceCurrentFragment(Fragment newFragment) {
+        FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+        transaction.replace(R.id.sample_content_fragment, newFragment);
+        transaction.commit();
     }
 }
