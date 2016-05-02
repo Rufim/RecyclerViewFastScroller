@@ -21,6 +21,10 @@ compile 'xyz.danoz:recyclerviewfastscroller:0.1.3'
 compile 'com.github.emanuelet:RecyclerViewFastScroller:0.2.0'
 ```
 
+```java
+compile 'com.github.smartcanvas:RecyclerViewFastScroller:0.2.1'
+```
+
 Add `maven { url "https://jitpack.io" }` to repositories.
 
 ### Usage

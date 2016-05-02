@@ -24,6 +24,6 @@ ext {
     androidSupportGroup = 'com.android.support'
     targetSdkVersion = 23
     minSdkVersion = 14
-    versionCode = 7
-    versionName = "0.2.1"
+    versionCode = 8
+    versionName = "0.2.2"
 }
