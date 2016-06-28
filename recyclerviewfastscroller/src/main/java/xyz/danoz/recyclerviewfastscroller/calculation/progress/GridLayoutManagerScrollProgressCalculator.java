@@ -1,7 +1,5 @@
 package xyz.danoz.recyclerviewfastscroller.calculation.progress;
 
-import xyz.danoz.recyclerviewfastscroller.calculation.VerticalScrollBoundsProvider;
-
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -10,6 +8,8 @@ import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.View;
 
 import java.util.Arrays;
+
+import xyz.danoz.recyclerviewfastscroller.calculation.VerticalScrollBoundsProvider;
 
 /**
  * Calculates scroll progress for a {@link RecyclerView} with a {@link LinearLayoutManager}
@@ -45,6 +45,7 @@ public class GridLayoutManagerScrollProgressCalculator extends VerticalScrollPro
         if (visibleChild == null) {
             return 0;
         }
+
         ViewHolder holder = recyclerView.getChildViewHolder(visibleChild);
         int itemHeight = holder.itemView.getHeight();
         int recyclerHeight = recyclerView.getHeight();
@@ -54,7 +55,7 @@ public class GridLayoutManagerScrollProgressCalculator extends VerticalScrollPro
         int numScrollableSectionsInList = numItemsInList - itemsInWindow;
         int indexOfLastFullyVisibleItemInFirstSection = numItemsInList - numScrollableSectionsInList - 1;
 
-        int currentSection = lastFullyVisiblePosition - indexOfLastFullyVisibleItemInFirstSection;
+        int currentSection = Math.max(0, lastFullyVisiblePosition - indexOfLastFullyVisibleItemInFirstSection);
 
         return (float) currentSection / numScrollableSectionsInList;
     }
