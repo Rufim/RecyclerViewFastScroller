@@ -29,7 +29,6 @@ import xyz.danoz.recyclerviewfastscroller.sectionindicator.SectionIndicator;
 /**
  * Defines a basic widget that will allow for fast scrolling a RecyclerView using the basic paradigm of
  * a handle and a bar.
- * <p>
  * TODO: More specifics and better support for effectively extending this base class
  */
 public abstract class AbsRecyclerViewFastScroller extends FrameLayout implements RecyclerViewScroller {

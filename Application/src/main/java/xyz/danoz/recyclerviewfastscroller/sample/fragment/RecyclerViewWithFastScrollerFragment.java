@@ -48,16 +48,16 @@ public class RecyclerViewWithFastScrollerFragment extends Fragment {
         RecyclerView recyclerView = (RecyclerView) rootView.findViewById(R.id.recycler_view);
         VerticalRecyclerViewFastScroller fastScroller = (VerticalRecyclerViewFastScroller) rootView.findViewById(R.id.fast_scroller);
 
-//        // Connect the recycler to the scroller (to let the scroller scroll the list)
-//        fastScroller.setRecyclerView(recyclerView);
-//
-//        // Connect the scroller to the recycler (to let the recycler scroll the scroller's handle)
-//        recyclerView.addOnScrollListener(fastScroller.getOnScrollListener());
-//
-//        setRecyclerViewLayoutManager(recyclerView);
-//
-//        RecyclerView.Adapter adapter = new ColorfulAdapter(new ColorDataSet());
-//        recyclerView.setAdapter(adapter);
+        // Connect the recycler to the scroller (to let the scroller scroll the list)
+        fastScroller.setRecyclerView(recyclerView);
+
+        // Connect the scroller to the recycler (to let the recycler scroll the scroller's handle)
+        recyclerView.addOnScrollListener(fastScroller.getOnScrollListener());
+
+        setRecyclerViewLayoutManager(recyclerView);
+
+        RecyclerView.Adapter adapter = new ColorfulAdapter(new ColorDataSet());
+        recyclerView.setAdapter(adapter);
 
         return rootView;
     }
