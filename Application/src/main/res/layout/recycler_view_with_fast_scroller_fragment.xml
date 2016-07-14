@@ -15,6 +15,7 @@
         android:layout_height="match_parent"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
+        android:scrollbars="vertical"
         android:paddingEnd="@dimen/margin_small"
         android:paddingRight="@dimen/margin_small"
         recyclerviewfastscroller:rfs_barColor="@color/fastScrollBarColor"
