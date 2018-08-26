@@ -23,7 +23,7 @@ android {
 }
 
 dependencies {
-    compile group: rootProject.ext.androidSupportGroup, name: 'support-v4', version: rootProject.ext.supportLibsVersion
-    compile group: rootProject.ext.androidSupportGroup, name: 'recyclerview-v7', version: rootProject.ext.supportLibsVersion
-    compile project(':recyclerviewfastscroller')
+    implementation group: rootProject.ext.androidSupportGroup, name: 'support-v4', version: rootProject.ext.supportLibsVersion
+    implementation group: rootProject.ext.androidSupportGroup, name: 'recyclerview-v7', version: rootProject.ext.supportLibsVersion
+    implementation project(':recyclerviewfastscroller')
 }
