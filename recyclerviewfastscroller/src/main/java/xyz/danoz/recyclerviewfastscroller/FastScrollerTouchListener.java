@@ -10,7 +10,7 @@ import xyz.danoz.recyclerviewfastscroller.sectionindicator.SectionIndicator;
 /**
  * Touch listener that will move a {@link AbsRecyclerViewFastScroller}'s handle to a specified offset along the scroll bar
  */
-class FastScrollerTouchListener implements OnTouchListener {
+public class FastScrollerTouchListener implements OnTouchListener {
 
     private final AbsRecyclerViewFastScroller mFastScroller;
 
